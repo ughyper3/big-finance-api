@@ -1,4 +1,6 @@
+import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,10 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dlcn+18qedd*j%)=i8dnqe_)oy8lf(vm9!*!bf9x2+(a()bse0'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -69,8 +71,12 @@ WSGI_APPLICATION = 'bigFinance.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('NAME'),
+        'USER': config('USER'),
+        'PASSWORD': config('PASSWORD'),
+        'HOST': config('HOST'),
+        'PORT': 5432
     }
 }
 
@@ -125,8 +131,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-FINNHUB_SANDBOX_API_KEY = 'sandbox_c9gpaoaad3iblo2fk0e0'
+FINNHUB_SANDBOX_API_KEY = config('FINNHUB_SANDBOX_API_KEY')
 
-FINNHUB_API_KEY = 'c9gpaoaad3iblo2fk0dg'
+FINNHUB_API_KEY = config('FINNHUB_API_KEY')
 
-STOCK_DATA_API_KEY = 'Z9DLSPbVs5aYun3X9aOY60GbtmrBQu7rlvAFAvkn'
+STOCK_DATA_API_KEY = config('STOCK_DATA_API_KEY')
+
