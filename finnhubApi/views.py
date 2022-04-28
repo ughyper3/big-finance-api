@@ -19,6 +19,8 @@ class CompanyProfile(APIView):
 
 
 class CompanyQuote(APIView):
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None, *args, **kwargs):
         finnhub_client = finnhub.Client(api_key=FINNHUB_SANDBOX_API_KEY)
@@ -28,6 +30,8 @@ class CompanyQuote(APIView):
 
 
 class CompanyRecommendation(APIView):
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None, *args, **kwargs):
         finnhub_client = finnhub.Client(api_key=FINNHUB_API_KEY)
@@ -37,6 +41,8 @@ class CompanyRecommendation(APIView):
 
 
 class CompanySocialSentiment(APIView):
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None, *args, **kwargs):
         finnhub_client = finnhub.Client(api_key=FINNHUB_API_KEY)
@@ -46,6 +52,8 @@ class CompanySocialSentiment(APIView):
 
 
 class MarketNews(APIView):
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None, *args, **kwargs):
         finnhub_client = finnhub.Client(api_key=FINNHUB_API_KEY)

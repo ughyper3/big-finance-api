@@ -1,11 +1,15 @@
 from requests import get
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from bigFinance.settings import STOCK_DATA_API_KEY
 
 
 class CompanyQuote(APIView):
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None, *args, **kwargs):
         api_key = STOCK_DATA_API_KEY
@@ -16,6 +20,8 @@ class CompanyQuote(APIView):
 
 
 class CompanyIntradayQuote(APIView):
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None, *args, **kwargs):
         api_key = STOCK_DATA_API_KEY
@@ -26,6 +32,8 @@ class CompanyIntradayQuote(APIView):
 
 
 class CompanyEndOfDayQuote(APIView):
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None, *args, **kwargs):
         api_key = STOCK_DATA_API_KEY
@@ -36,6 +44,8 @@ class CompanyEndOfDayQuote(APIView):
 
 
 class CompanyNews(APIView):
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None, *args, **kwargs):
         api_key = STOCK_DATA_API_KEY
