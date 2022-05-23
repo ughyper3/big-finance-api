@@ -7,7 +7,7 @@ import finnhub
 from bigFinance.settings import FINNHUB_API_KEY, FINNHUB_SANDBOX_API_KEY
 
 
-class CompanyProfile(APIView):
+class CompanyProfile(APIView):  # request only one time
     permission_classes = (IsAuthenticated,)
     renderer_classes = [JSONRenderer]
 
@@ -18,7 +18,7 @@ class CompanyProfile(APIView):
         return Response(response, status=status.HTTP_200_OK)
 
 
-class CompanyQuote(APIView):
+class CompanyQuote(APIView):  # request every-day at 11pm
     permission_classes = (IsAuthenticated,)
     renderer_classes = [JSONRenderer]
 
@@ -26,10 +26,20 @@ class CompanyQuote(APIView):
         finnhub_client = finnhub.Client(api_key=FINNHUB_SANDBOX_API_KEY)
         company_name = self.kwargs['company_name']
         response = finnhub_client.quote(symbol=company_name)
-        return Response(response, status=status.HTTP_200_OK)
+        response_processed = {
+            'company': self.kwargs['company_name'],
+            'current_price': response['c'],
+            'change': response['d'],
+            'percent change': response['dp'],
+            'high price of the day': response['h'],
+            'low price of the day': response['l'],
+            'open price of the day': response['o'],
+            'previous close price': response['pc']
+        }
+        return Response(response_processed, status=status.HTTP_200_OK)
 
 
-class CompanyRecommendation(APIView):
+class CompanyRecommendation(APIView):  # request the 2 of each month
     permission_classes = (IsAuthenticated,)
     renderer_classes = [JSONRenderer]
 
@@ -40,7 +50,7 @@ class CompanyRecommendation(APIView):
         return Response(response, status=status.HTTP_200_OK)
 
 
-class CompanySocialSentiment(APIView):
+class CompanySocialSentiment(APIView):  # request every hour
     permission_classes = (IsAuthenticated,)
     renderer_classes = [JSONRenderer]
 
@@ -51,7 +61,7 @@ class CompanySocialSentiment(APIView):
         return Response(response, status=status.HTTP_200_OK)
 
 
-class MarketNews(APIView):
+class MarketNews(APIView):  # request every day at 11 pm
     permission_classes = (IsAuthenticated,)
     renderer_classes = [JSONRenderer]
 
