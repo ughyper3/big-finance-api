@@ -38,6 +38,8 @@ class CompanyRecommendation(APIView):  # request the 2 of each month
 
 
 class CompanySocialSentiment(APIView):  # request every hour
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None, *args, **kwargs):
         finnhub_client = finnhub.Client(api_key=FINNHUB_API_KEY)
